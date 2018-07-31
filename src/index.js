@@ -1,4 +1,4 @@
 var shim = require('fabric-shim');
-var Chaincode = require('./chaincode.js').Chaincode;
+var Asset = require('./asset_cc.js').Asset;
 
-shim.start(new Chaincode());
+shim.start(new Assets());

@@ -2,32 +2,53 @@ var ChaincodeMockStub = require('@theledger/fabric-mock-stub').ChaincodeMockStub
 var Transform = require('@theledger/fabric-mock-stub').Transform;
 var expect = require('chai').expect;
 
-var Chaincode = require('../src/chaincode.js').Chaincode;
+var Asset = require('../src/asset_cc.js').Asset;
 
-const chaincode = new Chaincode();
+const asset = new Asset();
 let mockStub;
 
 describe('Test Chaincode', () => {
 
-    it("Should init without issues", async () => {
-        mockStub = new ChaincodeMockStub("MyMockStub", chaincode);
-        const response = await mockStub.mockInit("Init", ['Init', 'a', '10']);
+    it('Should init without issues', async () => {
+        mockStub = new ChaincodeMockStub('MyMockStub', asset);
+        const response = await mockStub.mockInit('Init', []);
 
-        expect(response.status).to.eql(200)
+        expect(response.status).to.eql(200);
     });
 
-    it("Should Add delta to the history", async () => {
-        const response = await mockStub.mockInvoke("tx1", ['Add', 'a', '20']);
+    it('Should Create asset', async () => {
+        const response = await mockStub.mockInvoke('tx1', ['createAsset', 'partA', 'No comments']);
 
-        expect(response.status).to.eql(200)
+        expect(response.status).to.eql(200);
     });
 
-    it("Should Query from state", async () => {
-        const response = await mockStub.mockInvoke("tx1", ['Query', 'a']);
+    it('Should Transfer asset', async () => {
+        const response = await mockStub.mockInvoke('tx2', ['transferAsset', 'partA', 'No comments', 'newOwnerId']);
+        const payload = Transform.bufferToObject(response.payload);
 
-        expect(response.status).to.eql(200)
-        expect(Transform.bufferToString(response.payload)).to.eql('30')
-       
+        expect(response.status).to.eql(200);
+        expect(payload).to.have.property('owner', 'newOwnerId');
+    });
+
+    it('Should Throw error for Invalid function invoke', async () => {
+        const response = await mockStub.mockInvoke('tx3', ['transferAsset', 'partA', 'No comments', 'selfId']);
+
+        expect(response.status).to.eql(500);
+    });
+
+    it('Should Query from state', async () => {
+        const response = await mockStub.mockInvoke('tx4', ['Query', 'partA']);
+        const payload = Transform.bufferToObject(response.payload);
+
+        expect(response.status).to.eql(200);
+        expect(payload).to.have.property('name', 'partA');
+        expect(payload).to.have.property('comments', 'No comments');
+    });
+
+    it('Should Throw error for Invalid function invoke', async () => {
+        const response = await mockStub.mockInvoke('tx5', ['Delete']);
+
+        expect(response.status).to.eql(500);
     });
 });
 
