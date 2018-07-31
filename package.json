@@ -1,0 +1,35 @@
+{
+  "name": "asset-tracking",
+  "version": "1.0.0",
+  "description": "Asset tracking chain-code: Fabric 1.2 learning",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/subhodi/asset-tracking.git"
+  },
+  "author": "subhodi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/subhodi/asset-tracking/issues"
+  },
+  "homepage": "https://github.com/subhodi/asset-tracking#readme",
+  "dependencies": {
+    "@theledger/fabric-mock-stub": "^2.0.3",
+    "fabric-shim": "^1.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  },
+	"engines": {
+		"node": ">=8.4.0",
+		"npm": ">=5.3.0"
+	}
+}
