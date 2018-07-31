@@ -1,4 +1,4 @@
 var shim = require('fabric-shim');
-var MyChaincode = require('./chaincode.js');
+var Chaincode = require('./chaincode.js').Chaincode;
 
-shim.start(new MyChaincode());
+shim.start(new Chaincode());

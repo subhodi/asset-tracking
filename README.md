@@ -1,6 +1,6 @@
 # asset-tracking
-Asset tracking chain-code: Fabric 1.2 learning
-Run Fabric chaincode testcases without actually running Fabric network/peers.
+Asset tracking chain-code: Fabric 1.2 learning  
+Run Fabric chaincode testcases without actually running any Fabric network/peers.
 
 ## Project-structure
 src: chaincode source files  
